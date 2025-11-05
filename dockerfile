@@ -1,14 +1,12 @@
-# Usa una imagen de Java
-FROM eclipse-temurin:21-jdk
-
-# Directorio de trabajo
+# Etapa 1: Construcción con Maven
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copia el archivo jar ya compilado (ajusta el nombre según tu .jar)
-COPY target/fleetguard360F3-0.0.1-SNAPSHOT.jar app.jar
-
-# Puerto expuesto (ajusta si usas otro)
+# Etapa 2: Imagen final con Java
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Comando para ejecutar la app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
