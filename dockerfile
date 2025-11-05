@@ -1,5 +1,5 @@
 # Usa una imagen de Java
-FROM openjdk:21
+FROM eclipse-temurin:21-jdk
 
 # Directorio de trabajo
 WORKDIR /app
