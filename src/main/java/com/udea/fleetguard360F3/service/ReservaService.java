@@ -1,5 +1,6 @@
 package com.udea.fleetguard360F3.service;
 
+import com.udea.fleetguard360F3.model.Ciudad;
 import com.udea.fleetguard360F3.model.Pasajero;
 import com.udea.fleetguard360F3.model.PasajeroAdicional;
 import com.udea.fleetguard360F3.model.Reserva;
@@ -13,4 +14,5 @@ public interface ReservaService {
     Reserva crearReserva(Pasajero pasajero, Long viajeId, List<PasajeroAdicional> adicionales, int cantidadAsientos);
     List<Reserva> reservasPorPasajero(Long pasajeroId);
     Reserva cancelarReserva(Long reservaId, Long pasajeroId);
+    List<String> buscarCiudades();
 }

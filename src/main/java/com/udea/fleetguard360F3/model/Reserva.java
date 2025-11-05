@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+//Se agrega @Table para mayor compatibilidad con la base de datos
+@Table(name = "reserva")
 public class Reserva {
 
     @Id

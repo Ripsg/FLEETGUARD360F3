@@ -23,9 +23,10 @@ public class LoginPasajeroController {
         try {
             Pasajero p = service.authenticate(input.username(), input.password());
             String token = service.generateToken(p);
-            return new LoginResponse(true, "Login exitoso", token);
+            //SE AGREGO AL PASAJERO p AL RESPONSE ACÁ Y AL FINAL
+            return new LoginResponse(true, "Login exitoso", token, p);
         } catch (IllegalArgumentException ex) {
-            return new LoginResponse(false, ex.getMessage(), null);
+            return new LoginResponse(false, ex.getMessage(), null,null);
         }
     }
 
@@ -46,7 +47,7 @@ public class LoginPasajeroController {
         }
     }
 
-
-    static record LoginResponse(boolean success, String message, String token) {}
+    //SE AGREGO AL PASAJERO p AL RESPONSE
+    static record LoginResponse(boolean success, String message, String token, Pasajero pasajero) {}
     static record ResetPasswordResponse(boolean success, String message) {}
 }

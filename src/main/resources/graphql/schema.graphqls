@@ -7,6 +7,13 @@ type PasajeroDto {
   email: String
   createdAt: String
 }
+
+"""Se agrega el type ciudad para enviar y recibir información respecto a las ciudades"""
+type Ciudad {
+  id: ID!
+  nombre: String! # La columna de interés
+}
+
 type Viaje {
   id: ID!
   origen: String!
@@ -25,15 +32,16 @@ type PasajeroAdicional {
   identificacion: String!
 }
 
+"""Cambio de nombre de atributo createdAt a fechaReserva""" 
 type Reserva {
   id: ID!
   codigoReserva: String!
   cantidadAsientos: Int!
   estado: String!
   viaje: Viaje!
-  pasajeroPrincipal: PasajeroDto!
+  pasajero: PasajeroDto!
   pasajerosAdicionales: [PasajeroAdicional!]
-  createdAt: String
+  fechaReserva: String
 }
 
 input RegistroPasajeroInput {
@@ -58,11 +66,12 @@ input LoginPasajeroInput {
   password: String!
 }
 
+"""Cambio de nombre de pasajeroPrincipal a pasajero"""
 type LoginResponse {
   success: Boolean!
   message: String
   token: String
-
+  pasajero: PasajeroDto
 }
 
 input ResetPasswordInput {
@@ -118,6 +127,9 @@ type Query {
   pasajeroById(id: ID!): PasajeroDto
   buscarViajes(input: BuscarViajesInput!): [Viaje!]!
   misReservas(pasajeroId: ID!): [Reserva!]!
+
+"""Se agrega el type ciudad para enviar y recibir información respecto a las ciudades"""
+  buscarCiudades: [String!]!
 }
 
 type Mutation {
@@ -125,7 +137,9 @@ type Mutation {
 
   login(input: LoginPasajeroInput!): LoginResponse!
   sendPasswordReset(email: String!): Boolean!
-  resetPassword(token: String!, newPassword: String!): Boolean!
+  
+  """Se cambio el argumento y response"""
+  resetPassword(input: ResetPasswordInput): ResetPasswordResponse!
 
   crearReserva(input: CrearReservaDto!, pasajeroId: ID!): ReservaResponse!
   cancelarReserva(reservaId: ID!, pasajeroId: ID!): ReservaResponse!

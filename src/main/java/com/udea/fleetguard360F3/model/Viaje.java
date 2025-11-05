@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
+//Se agrega @Table para mayor compatibilidad con la base de datos
+@Table(name = "viaje")
 public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

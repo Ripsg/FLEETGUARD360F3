@@ -1,6 +1,7 @@
 package com.udea.fleetguard360F3.service.impl;
 
 import com.udea.fleetguard360F3.model.*;
+import com.udea.fleetguard360F3.repository.CiudadRepository;
 import com.udea.fleetguard360F3.repository.ReservaRepository;
 import com.udea.fleetguard360F3.repository.ViajeRepository;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,19 @@ public class ReservaServiceImpl implements ReservaService {
 
     private final ReservaRepository reservaRepo;
     private final ViajeRepository viajeRepo;
+    private final CiudadRepository ciudadRepo;
 
-    public ReservaServiceImpl(ReservaRepository reservaRepo, ViajeRepository viajeRepo) {
+    public ReservaServiceImpl(ReservaRepository reservaRepo, ViajeRepository viajeRepo, CiudadRepository ciudadRepo) {
         this.reservaRepo = reservaRepo;
         this.viajeRepo = viajeRepo;
+        this.ciudadRepo = ciudadRepo;
     }
 
     @Override
     public List<Viaje> buscarViajes(String origen, String destino, LocalDate fecha) {
         return viajeRepo.findByOrigenAndDestinoAndFecha(origen, destino, fecha);
     }
+
     @Override
     @Transactional
     public Reserva crearReserva(Pasajero pasajero, Long viajeId, List<PasajeroAdicional> adicionales, int cantidadAsientos) {
@@ -95,4 +99,12 @@ public class ReservaServiceImpl implements ReservaService {
         System.out.println("Asunto: " + subject);
         System.out.println("Contenido: " + body);
     }
+
+
+    //Método para devolver ciudades
+    @Override
+    public List<String> buscarCiudades() {
+        return ciudadRepo.findAllNombre();
+    }
+
 }

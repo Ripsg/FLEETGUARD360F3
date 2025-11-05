@@ -79,7 +79,7 @@ public class PasajeroServiceImpl implements PasajeroService {
 
         if (!passwordEncoder.matches(password, p.getPasswordHash())) {
             throw new IllegalArgumentException("Credenciales inválidas");
-        }
+        } 
         return p;
     }
 
@@ -106,9 +106,9 @@ public class PasajeroServiceImpl implements PasajeroService {
 
         String token = UUID.randomUUID().toString();
         resetTokens.put(token, p.getUsername());
-
+//SE CAMBIO EL LINK PARA REDIRIGIR A LA PÁGINA DE CAMBIO DE CONTRASEÑA
         sendEmail(email, "Restablecer contraseña",
-                "Link: http://frontend/reset-password?token=" + token);
+                "http://localhost:8081/change-password?token=" + token);
 
         new Timer().schedule(new TimerTask() {
             public void run() {
